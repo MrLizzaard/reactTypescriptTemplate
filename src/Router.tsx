@@ -4,6 +4,7 @@ import Introduce from "./pages/Introduce";
 import MainPage from "./pages/MainPage";
 import NotFound from "./pages/NotFound";
 import Projects from "./pages/Projects";
+import ChatBot from "./pages/ChatBot";
 
 interface RouterItem {
   path: string;
@@ -14,6 +15,7 @@ interface RouterItem {
 const routerItems: RouterItem[] = [
   { path: "/", element: <Introduce />, title: "소개" },
   { path: "/projects", element: <Projects />, title: "프로젝트" },
+  { path: "/chat-bot", element: <ChatBot />, title: "챗봇" },
 ];
 
 const Router = () => {
