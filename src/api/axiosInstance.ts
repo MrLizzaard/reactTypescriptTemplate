@@ -1,5 +1,7 @@
 // src/api/axiosInstance.ts
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import { useSessionStore } from "../store/useSessionStore";
+import { useLoadingStore } from "../store/useLoadingStore";
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -13,6 +15,7 @@ const axiosInstance = axios.create({
 // 요청 인터셉터
 axiosInstance.interceptors.request.use(
   (config) => {
+    useLoadingStore.getState().showLoading();
     // 필요 시 토큰 주입 가능
     const token = localStorage.getItem("access_token");
     if (token) {
@@ -25,8 +28,12 @@ axiosInstance.interceptors.request.use(
 
 // 응답 인터셉터
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    useLoadingStore.getState().hideLoading();
+    return response;
+  },
   async (error: AxiosError) => {
+    useLoadingStore.getState().hideLoading();
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
@@ -108,7 +115,7 @@ function logoutAndReject() {
   // 서버에도 로그아웃 요청
   axios.post(`${process.env.REACT_APP_API_BASE_URL}/logout`).catch(() => {});
 
-  window.location.href = "/login";
+  useSessionStore.getState().setSessionExpired("세션이 만료되었습니다. 다시 로그인해주세요.");
 
   return Promise.reject({
     statusCode: 401,

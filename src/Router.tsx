@@ -1,9 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import MainPage from "./pages/MainPage";
 import Introduce from "./pages/Introduce";
-import Projects from "./pages/Projects";
+import MainPage from "./pages/MainPage";
 import NotFound from "./pages/NotFound";
+import Projects from "./pages/Projects";
 
 interface RouterItem {
   path: string;
