@@ -1,11 +1,11 @@
 // src/api/axiosInstance.ts
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import { useSessionStore } from "../store/useSessionStore";
 import { useLoadingStore } from "../store/useLoadingStore";
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
-  timeout: 10000,
+  // timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -15,7 +15,10 @@ const axiosInstance = axios.create({
 // 요청 인터셉터
 axiosInstance.interceptors.request.use(
   (config) => {
-    useLoadingStore.getState().showLoading();
+    // skipLoading이 true인 경우 로딩 표시 안 함
+    if (!config.skipLoading) {
+      useLoadingStore.getState().showLoading();
+    }
     // 필요 시 토큰 주입 가능
     const token = localStorage.getItem("access_token");
     if (token) {
@@ -29,11 +32,20 @@ axiosInstance.interceptors.request.use(
 // 응답 인터셉터
 axiosInstance.interceptors.response.use(
   (response) => {
-    useLoadingStore.getState().hideLoading();
+    const config = response.config as InternalAxiosRequestConfig;
+
+    // skipLoading이 true인 경우 로딩 숨김
+    if (!config.skipLoading) {
+      useLoadingStore.getState().hideLoading();
+    }
     return response;
   },
   async (error: AxiosError) => {
-    useLoadingStore.getState().hideLoading();
+    const config = error.config as InternalAxiosRequestConfig;
+
+    if (!config.skipLoading) {
+      useLoadingStore.getState().hideLoading();
+    }
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
