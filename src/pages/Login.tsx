@@ -61,7 +61,7 @@ const Login = () => {
   };
 
   const handleOAuthLogin = (provider: "google" | "github" | "naver") => {
-    // window.location.href = `${process.env.REACT_APP_API_BASE_URL}/auth/${provider}`;
+    window.location.href = `${process.env.REACT_APP_API_BASE_URL}/auth/${provider}`;
   };
 
   return (

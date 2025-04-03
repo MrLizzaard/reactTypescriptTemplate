@@ -29,15 +29,12 @@ const OAuthButtons = ({ onClick }: OAuthButtonsProps) => {
   return (
     <ButtonContainer>
       <IconButton onClick={() => onClick("google")} aria-label="구글 로그인">
-        {/* <FcGoogle /> */}
         <GoogleIcon />
       </IconButton>
       <IconButton onClick={() => onClick("github")} aria-label="깃허브 로그인">
-        {/* <FaGithub color="black" /> */}
         <GithubIcon color="black" />
       </IconButton>
       <IconButton onClick={() => onClick("naver")} aria-label="네이버 로그인">
-        {/* <SiNaver color="#2DB400" /> */}
         <NaverIcon color="#2DB400" />
       </IconButton>
     </ButtonContainer>
