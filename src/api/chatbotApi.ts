@@ -1,11 +1,10 @@
-import axios from "./axiosInstance";
+import axiosInstance from "./axiosInstance";
 
 interface ChatbotResponse {
   reply: string;
 }
 
 export const sendChatMessage = async (message: string): Promise<ChatbotResponse> => {
-  const res = await axios.post("/chatbot", { message }, { skipLoading: true });
-  console.log(res);
+  const res = await axiosInstance.post("/chatbot", { message }, { skipLoading: true });
   return res.data.data;
 };

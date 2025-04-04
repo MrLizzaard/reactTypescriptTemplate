@@ -7,6 +7,7 @@ import Projects from "./pages/Projects";
 import ChatBot from "./pages/ChatBot";
 import Login from "./pages/Login";
 import RequireAuth from "./components/RequireAuth";
+import OAuthCallback from "./pages/OAuthCallback";
 
 interface RouterItem {
   path: string;
@@ -24,6 +25,7 @@ const Router = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} /> {/* 로그인은 예외 */}
+      <Route path="/oauth-callback" element={<OAuthCallback />} />
       <Route element={<MainPage />}>
         {routerItems.map((route) => (
           <Route key={route.path} path={route.path} element={<RequireAuth>{route.element}</RequireAuth>} />
