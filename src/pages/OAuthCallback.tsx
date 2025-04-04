@@ -9,8 +9,6 @@ const OAuthCallback = () => {
     const accessToken = params.get("accessToken");
     const refreshToken = params.get("refreshToken");
 
-    console.log(params);
-
     if (accessToken && refreshToken) {
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);

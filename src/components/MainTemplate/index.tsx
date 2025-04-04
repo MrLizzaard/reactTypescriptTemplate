@@ -12,7 +12,6 @@ const MainTemplate = ({ children }: MainTemplateProps) => {
   const handleLogout = async () => {
     try {
       const accessToken = localStorage.getItem("access_token");
-      console.log("accessToken", accessToken);
       if (accessToken) {
         await axiosInstance.get("/auth/logout");
       }
