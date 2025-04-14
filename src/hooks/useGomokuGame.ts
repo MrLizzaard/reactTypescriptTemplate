@@ -1,5 +1,5 @@
 // hooks/useGomokuGame.ts
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { isForbiddenMove } from "../utils/renjuRules";
 
 const useGomokuGame = (BOARD_SIZE: number) => {
@@ -7,6 +7,10 @@ const useGomokuGame = (BOARD_SIZE: number) => {
   const [currentPlayer, setCurrentPlayer] = useState<"black" | "white">("black");
   const [winner, setWinner] = useState<"black" | "white" | null>(null);
   const [winningStones, setWinningStones] = useState<{ x: number; y: number }[]>([]);
+
+  useEffect(() => {
+    console.log(stones);
+  }, [stones]);
 
   const handleMove = (x: number, y: number) => {
     if (stones.some((s) => s.x === x && s.y === y)) return;

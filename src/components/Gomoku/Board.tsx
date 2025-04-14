@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import useGomokuGame from "../../hooks/useGomokuGame";
 
-// type Cell = "black" | "white";
-
 const BOARD_SIZE = 15;
 const STONE_SIZE = 35; // 돌 크기(px)
 
